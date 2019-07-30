@@ -4,14 +4,6 @@ var axios = require("axios");
 var exphbs = require("express-handlebars");
 var mongoose = require("mongoose");
 var logger = require("morgan");
-
-var express = require("express");
-var cheerio = require("cheerio");
-var axios = require("axios");
-var exphbs = require("express-handlebars");
-var mongoose = require("mongoose");
-var logger = require("morgan");
-
 var db = require("./models");
 
 var app = express();
@@ -30,10 +22,12 @@ app.engine(
 app.set("view engine", "handlebars");
 
 var MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/nonewsisgood";
+  process.env.MONGODB_URI ||
+  "mongodb://heroku_g4v930q7:hfbon4951kht7sfvuaqis1rkda@ds255857.mlab.com:55857/heroku_g4v930q7";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 app.get("/articles-json", function(req, res) {
+  he;
   db.Article.find()
     .then(function(dbArticle) {
       res.json(dbArticle);
