@@ -21,10 +21,20 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-var MONGODB_URI =
+/*var MONGODB_URI =
   process.env.MONGODB_URI ||
   "mongodb://heroku_g4v930q7:hfbon4951kht7sfvuaqis1rkda@ds255857.mlab.com:55857/heroku_g4v930q7";
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });*/
+
+var MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+mongoose.connect(MONGODB_URI);
+
+mongoose.connection.on("connected", () => console.log("mongodb connected"));
+mongoose.connection.on("open", () => console.log("mongodb connection opened"));
+mongoose.connection.on("error", err => console.log("mongodb error: " + err));
 
 app.get("/articles-json", function(req, res) {
   he;
@@ -38,6 +48,7 @@ app.get("/articles-json", function(req, res) {
 });
 
 app.get("/articles", function(req, res) {
+  console.log("Inside get request", req);
   db.Article.find({ saved: false })
     .sort({ _id: -1 })
     .limit(100)
@@ -197,6 +208,7 @@ app.post("/remove/comment/:id", function(req, res) {
 });
 
 app.get("/", function(req, res) {
+  console.log("Inside get request", req);
   res.redirect("/articles");
 });
 
